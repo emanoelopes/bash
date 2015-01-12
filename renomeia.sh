@@ -2,23 +2,13 @@
 
 #Renomear arquivos com o parametro $1 seguido de uma sequencia numerica.
 
-#arq=`ls`
-
-#if [ ! -d "$arq" ] ; then
-#a=0
-#for i in "$arq"; do
-#	echo "extensao ${i#*.} encontrada"
-#	let a++
-#done
-#else
-#	echo "Nenhum arquivo encontrado"
-#fi
-
-ext="AVI"
-
+echo "digite a extensao de entrada"
+read ext1
+echo "digite a extensao de saida"
+read ext2
 a=0
-for i in *."$ext"; do
-  novo=$(printf "$1-%04d.avi" "$a") #04 pad to length of 4
+for i in *."$ext1"; do
+  novo=$(printf "$1-%04d.$ext2" "$a") #04 pad to length of 4
 	echo "$i"
 	echo "$novo"
   mv -v -- "$i" "$novo"
