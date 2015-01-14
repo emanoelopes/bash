@@ -2,6 +2,17 @@
 
 #Renomear arquivos com o parametro $1 seguido de uma sequencia numerica e alterando a extensao informada no parametro $2
 
+#Renomear os arquivos JPG em jpg
+for file in *.JPG; do
+mv $file `echo $file | sed 's/\(.*\.\)JPG/\1jpg/'`; done
+#Renomear os arquivos MOV em mov
+for file in *.MOV; do
+mv $file `echo $file | sed 's/\(.*\.\)MOV/\1mov/'`; done
+#Renomear os arquivos AVI em avi
+for file in *.AVI; do
+mv $file `echo $file | sed 's/\(.*\.\)AVI/\1avi/'`; done
+
+
 function renomear {
 a=1
 for i in *."$opt"; do
@@ -12,38 +23,26 @@ for i in *."$opt"; do
 done
 }
 
-nome=$1 #primeiro parametro será o nome comum a todos os arquivos.
-#o segundo parametro é a extensao, se nao for passado sera adotada a jpg/JPG
-if [ $2 ];then 
-opt=$2 
-else
-opt="jpg"
-fi
+nome=$1 #primeiro parametro será a parte comum a todos os arquivos.
 
-echo $opt
+#o segundo parametro é a extensao, se nao for passado sera adotada a jpg/JPG
+[ $2 ] && opt=$2 || opt="jpg"
 
 case $opt in
 	jpg|JPG)
-		echo "Renomeando imagens $opt"
-		ext="jpg"
-		renomear $nome $ext
+		ext="jpg"		
+		if [ -e "*.$opt" ]; then
+			renomear $nome $ext 
+		else
+			echo "Nao existe arquivo $opt para ser renomeado."
+		fi
 		;;
 	mov|MOV)
-		echo "Renomeando videos $opt"
 		ext="mov"
-		renomear $nome $ext
+		[ -e "*.$opt" ] && renomear $nome $ext || echo "Nao existe arquivo $opt para ser renomeado."
 		;;
 	avi|AVI)
-		echo "Renomeando videos $opt"
 		ext="avi"
-		renomear $nome $ext
-		;;
-	*)
-		echo "Nao foi informada uma extensao"
+		[ -e "*.$opt" ] && renomear $nome $ext || echo "Nao existe arquivo $opt para ser renomeado."
 		;;
 esac
-
-for f in *.JPG; do
-[ -e "*.JPG" ] && echo "existe $f" || echo "nao existe JPG!"
-
-done
