@@ -2,6 +2,12 @@
 
 #Renomear arquivos com o parametro $1 seguido de uma sequencia numerica e alterando a extensao informada no parametro $2
 
+#Remove os arquivos gerados pelo iPhoto
+rm *_face*
+
+#Remove os colchetes
+rename 's/[\[,\]]//g' *
+
 #Remover os parênteses
 rename 's/[(,)]//g' *
 
@@ -9,17 +15,23 @@ rename 's/[(,)]//g' *
 rename 's/ /_/g' *
 
 #Mudar as extensoes JPG para jpg
-for file in *.JPG; do
-mv $file `echo $file | sed 's/\(.*\.\)JPG/\1jpg/'`; done
+for files_jpg in *.JPG; do
+mv $files_jpg `echo $files_jpg | sed 's/\(.*\.\)JPG/\1jpg/'`; done
 #Mudar as extensoes MOV para mov
-for file in *.MOV; do
-mv $file `echo $file | sed 's/\(.*\.\)MOV/\1mov/'`; done
+for files_mov in *.MOV; do
+mv $files_mov `echo $files_mov | sed 's/\(.*\.\)MOV/\1mov/'`; done
 #Mudar as exetensoes AVI para avi
-for file in *.AVI; do
-mv $file `echo $file | sed 's/\(.*\.\)AVI/\1avi/'`; done
+for files_avi in *.AVI; do
+mv $files_mov `echo $files_mov | sed 's/\(.*\.\)AVI/\1avi/'`; done
+
+#Remove acentos dos arquivos
+for com_a in *;
+do
+sem_a=`echo "$com_a" | iconv -t 'ascii//TRANSLIT'`
+mv -v "$com_a" "$sem_a"
+done
 
 #Funcao que adiciona um texto comum a todos e acresenta uma sequencia numerica.
-
 function renomear {
 a=1
 for i in *."$opt"; do
@@ -29,6 +41,8 @@ for i in *."$opt"; do
   echo $novo
 done
 }
+
+
 
 nome=$1 #primeiro parametro será a parte comum a todos os arquivos.
 
