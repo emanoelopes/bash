@@ -2,21 +2,28 @@
 
 #Renomear arquivos com o parametro $1 seguido de uma sequencia numerica e alterando a extensao informada no parametro $2
 
-#Renomear os arquivos JPG em jpg
+#Remover os parênteses
+rename 's/[(,)]//g' *
+
+#Substituir os espaços vazios por "_" 
+rename 's/ /_/g' *
+
+#Mudar as extensoes JPG para jpg
 for file in *.JPG; do
 mv $file `echo $file | sed 's/\(.*\.\)JPG/\1jpg/'`; done
-#Renomear os arquivos MOV em mov
+#Mudar as extensoes MOV para mov
 for file in *.MOV; do
 mv $file `echo $file | sed 's/\(.*\.\)MOV/\1mov/'`; done
-#Renomear os arquivos AVI em avi
+#Mudar as exetensoes AVI para avi
 for file in *.AVI; do
 mv $file `echo $file | sed 's/\(.*\.\)AVI/\1avi/'`; done
 
+#Funcao que adiciona um texto comum a todos e acresenta uma sequencia numerica.
 
 function renomear {
 a=1
 for i in *."$opt"; do
-  novo=$(printf "$nome-%04d.$ext" "$a") #04 pad to length of 4
+  novo=$(printf "$nome-%04d.$ext" "$a") #Sequencia numérica de 4 dígitos.
   mv -v -- "$i" "$novo"
   let a=a+1
   echo $novo
@@ -30,9 +37,9 @@ nome=$1 #primeiro parametro será a parte comum a todos os arquivos.
 
 case $opt in
 	jpg|JPG)
-		ext="jpg"		
+		ext="jpg"
 		if [ -e "*.$opt" ]; then
-			renomear $nome $ext 
+			renomear $nome $ext
 		else
 			echo "Nao existe arquivo $opt para ser renomeado."
 		fi
