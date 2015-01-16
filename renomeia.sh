@@ -1,6 +1,7 @@
 #!/bin/bash
 
-#Renomear arquivos com o parametro $1 seguido de uma sequencia numerica e alterando a extensao informada no parametro $2
+
+#Script para renomear arquivos com o parametro $1 seguido de uma sequencia numerica e alterando a extensao informada no parametro $2 para poder serem sincronizados no piwigo.
 
 #Remove os arquivos gerados pelo iPhoto
 rm *_face*
