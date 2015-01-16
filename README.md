@@ -1,4 +1,4 @@
-bash
-====
+Scripts em Shell Script utilando o bash
+========================================
 
-Bash scripts
+Bash scripts para algumas rotinas.
