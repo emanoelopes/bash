@@ -14,6 +14,9 @@ rename 's/[(,)]//g' *
 #Substituir os espaços vazios por "_" 
 rename 's/ /_/g' *
 
+#Remover arquivos ocultos
+rm .*
+
 #Mudar as extensoes JPG para jpg
 for files_jpg in *.JPG; do
 mv $files_jpg `echo $files_jpg | sed 's/\(.*\.\)JPG/\1jpg/'`; done
